@@ -3,8 +3,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 
-const authRoutes = require('./routes/auth');
-const { errorHandler } = require('./middlewares/errorHandler');
+const authRoutes = require('./routes/jwtauth.js');
+const { errorHandler } = require('./middleware/errorHandler');
 
 dotenv.config();
 const app = express();
