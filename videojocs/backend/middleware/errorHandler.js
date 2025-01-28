@@ -3,5 +3,5 @@ const errorHandler = (err, req, res, next) => {
     res.status(500).json({ error: 'An unexpected error occurred' });
   };
   
-  module.exports = { errorHandler };
+export default errorHandler;
   
