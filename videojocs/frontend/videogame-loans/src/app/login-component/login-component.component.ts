@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -14,5 +14,13 @@ login() {
 throw new Error('Method not implemented.');
 }
 loginForm: any;
+
+constructor(public formBuilder: FormBuilder) {
+
+  this.loginForm = this.formBuilder.group({
+  username: ['', Validators.required],
+  password: ['', Validators.required]
+  });
+}
 
 }
