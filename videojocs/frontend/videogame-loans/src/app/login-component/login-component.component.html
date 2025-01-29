@@ -4,11 +4,11 @@
         <h2>Login</h2>
         <form [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="form-group">
-                <label for="username">Usuari</label>
-                <input type="text" formControlName="username" class="form-control" id="username" placeholder="Username">
+                <label for="username">Usuari</label><br>
+                <input type="text" formControlName="username" class="form-control" id="username" placeholder="Usuari"><br>
                 <label *ngIf="loginForm.controls.username.invalid && loginForm.controls.username.touched" class="text-danger">Es requereix un usuari</label>
-                <label for="password">Contrassenya</label>
-                <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password">
+                <label for="password">Contrassenya</label><br>
+                <input type="password" formControlName="password" class="form-control" id="password" placeholder="Contrassenya"><br>
                 <label *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched" class="text-danger">Es requereix una contrassenya</label>
                 <button type="submit" class="envia" [disabled]="loginForm.invalid">Login</button>
             </div>

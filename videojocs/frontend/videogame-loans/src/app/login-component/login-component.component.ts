@@ -10,10 +10,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login-component.component.scss'
 })
 export class LoginComponentComponent {
-login() {
-throw new Error('Method not implemented.');
-}
+
 loginForm: any;
+
+
+
+
 
 constructor(public formBuilder: FormBuilder) {
 
@@ -22,5 +24,11 @@ constructor(public formBuilder: FormBuilder) {
   password: ['', Validators.required]
   });
 }
+
+
+login() {
+  
+
+} 
 
 }
