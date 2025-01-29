@@ -1,3 +1,16 @@
 <div class="container">
-   
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+        <h2>Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="form-group">
+                <label for="username">Usuari</label>
+                <input type="text" formControlName="username" class="form-control" id="username" placeholder="Username">
+                <label *ngIf="loginForm.controls.username.invalid && loginForm.controls.username.touched" class="text-danger">Es requereix un usuari</label>
+                <label for="password">Contrassenya</label>
+                <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password">
+                <label *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched" class="text-danger">Es requereix una contrassenya</label>
+                <button type="submit" class="envia" [disabled]="loginForm.invalid">Login</button>
+            </div>
+        </form>
 </div>

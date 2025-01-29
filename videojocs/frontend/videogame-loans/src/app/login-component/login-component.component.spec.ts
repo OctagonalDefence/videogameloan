@@ -3,13 +3,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponentComponent } from './login-component.component';
 import e from 'express';
 
+import { FormBuilder } from '@angular/forms';
+
 describe('LoginComponentComponent', () => {
   let component: LoginComponentComponent;
   let fixture: ComponentFixture<LoginComponentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginComponentComponent]
+      imports: [LoginComponentComponent, FormBuilder],
     })
     .compileComponents();
     
@@ -40,5 +42,7 @@ describe('LoginComponentComponent', () => {
     expect(compiled.querySelector('button[type="submit"]')).toBeTruthy();
                
   });
+
+  
 
 });
