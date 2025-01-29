@@ -43,6 +43,24 @@ describe('LoginComponentComponent', () => {
                
   });
 
+  it('should have the form builder injected', () => {
+    expect(component.formBuilder).toBeTruthy();
+  });
+
+  it('should have the login method', () => {
+    expect(component.login).toBeTruthy();
+  });
+
+  it('should have the formbuilder group set', () => {
+    expect(component.loginForm).toBeTruthy();
+  });
+
+  it('should have the form validators set', () => {
+    expect(component.loginForm).toBeTruthy();
+    expect(component.loginForm.controls.username).toBeTruthy();
+    expect(component.loginForm.controls.password).toBeTruthy();
+  });
+
   
 
 });
