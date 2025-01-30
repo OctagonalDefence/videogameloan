@@ -16,5 +16,9 @@ export class AuthService {
     return this.http.get(`${dbUrl}/getAllUsers`);
   }
 
+  login(username: string, password: string) {
+    return this.http.post(`${dbUrl}/login`, { username, password });
+  }
+
   
 }
