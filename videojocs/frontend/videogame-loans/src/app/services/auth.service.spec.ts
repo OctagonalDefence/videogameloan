@@ -29,6 +29,7 @@ describe('AuthService', () => {
   it('getAllUsers should retrieve all users from the database', () => {
     expect(service.getAllUsers()).toBeTruthy();    
   });
+  
 
 
 });

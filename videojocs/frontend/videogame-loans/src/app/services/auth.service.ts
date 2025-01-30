@@ -12,8 +12,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  
-
+  getAllUsers() {
+    return this.http.get(`${dbUrl}/getAllUsers`);
+  }
 
 
 }
