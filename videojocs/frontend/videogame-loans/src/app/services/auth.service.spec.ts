@@ -29,6 +29,14 @@ describe('AuthService', () => {
   it('getAllUsers should retrieve all users from the database', () => {
     expect(service.getAllUsers()).toBeTruthy();    
   });
+
+  it('should have the login method', () => {
+    expect(service.login).toBeDefined();
+  });
+
+  it('login should authenticate the user', () => {
+    expect(service.login('username', 'password')).toBeTruthy();    
+  });
   
 
 

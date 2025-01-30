@@ -16,5 +16,5 @@ export class AuthService {
     return this.http.get(`${dbUrl}/getAllUsers`);
   }
 
-
+  
 }
