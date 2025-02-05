@@ -1,6 +1,6 @@
 import sql from 'mssql';
-import dbConfig from '../config/dbConfig';
-import errorHandler from '../middleware/errorHandler';
+import dbConfig from '../config/dbConfig.js';
+import errorHandler from '../middleware/errorHandler.js';
 
 
 export const getAllGames = async (req, res) => {

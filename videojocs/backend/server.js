@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 
-import userRoutes from './routes/userRoutes.js';
+import userRoutes from './routes/usersRoutes.js';
 import gameRoutes from './routes/gameRoutes.js';
+import authenticateJWT from './middleware/jwtauth.js';
 
 import dotenv from 'dotenv';
 
@@ -12,10 +13,10 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.use('/api/users', userRoutes);
-app.use('/api/games', gameRoutes);
+app.use('/api/users', userRoutes, authenticateJWT);
+app.use('/api/games', gameRoutes, authenticateJWT);
 
 app.listen(dotenv.PORT, IP, () => {
     console.log(`Server is running on http://${IP}:${dotenv.PORT}`);
