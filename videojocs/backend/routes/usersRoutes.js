@@ -4,7 +4,7 @@ import { getAllUsers, login } from "../controllers/userController.js";
 
 const UserRoutes = Router();
 
-UserRoutes.post('/getAllUsers', getAllUsers);
-UserRoutes.post('/login', login, authenticateJWT);
+UserRoutes.post('/getAllUsers', authenticateJWT, getAllUsers);
+UserRoutes.post('/login', authenticateJWT, login);
 
 export default UserRoutes;

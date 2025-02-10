@@ -8,8 +8,8 @@ describe('LoginComponentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginComponentComponent, ReactiveFormsModule], // ✅ Import instead of declaring
-      providers: [FormBuilder], // ✅ Provide FormBuilder
+      imports: [LoginComponentComponent, ReactiveFormsModule], 
+      providers: [FormBuilder], 
     }).compileComponents();
     
     fixture = TestBed.createComponent(LoginComponentComponent);
@@ -36,5 +36,12 @@ describe('LoginComponentComponent', () => {
   it('should have the form validators set', () => {
     expect(component.loginForm.controls.username).toBeTruthy();
     expect(component.loginForm.controls.password).toBeTruthy();
+  });
+
+  it('should login the user', () => {
+    component.loginForm.controls.username.setValue('admin');
+    component.loginForm.controls.password.setValue('admin');
+    component.login();
+    expect(component.loginForm.valid).toBeTruthy();
   });
 });
