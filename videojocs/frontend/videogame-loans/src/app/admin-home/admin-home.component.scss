@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-top-width: 150px;
+    border-top: solid 100px;
+    border-top-color: aquamarine;
+    padding: 5%;
+    padding-top: 20px;
+    
+}
+
+.container h2 {
+    font-size: 3em;
+    color: black;
+    margin-bottom: 40px;
+}
