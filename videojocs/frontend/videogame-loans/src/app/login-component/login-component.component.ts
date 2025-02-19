@@ -18,7 +18,7 @@ export class LoginComponentComponent {
   constructor(
     public formBuilder: FormBuilder,
     private authService: AuthService,
-    public  router: Router
+    public router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -29,10 +29,9 @@ export class LoginComponentComponent {
   login() {
     this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe((data) => {
       if (data) {
-        localStorage.setItem('user', JSON.stringify(data));
-        this.router.navigate(['/home']);
+        localStorage.setItem('token', data.token);
+        this.router.navigate(['/']);
       }
     });
-  
   }
 }

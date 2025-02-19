@@ -15,7 +15,7 @@ describe('LoginComponentComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
 
     await TestBed.configureTestingModule({
-      imports: [LoginComponentComponent, ReactiveFormsModule, HttpClientModule], 
+      imports: [ReactiveFormsModule, HttpClientModule, LoginComponentComponent], 
       providers: [
         FormBuilder, 
         AuthService,
@@ -52,22 +52,25 @@ describe('LoginComponentComponent', () => {
 
   it('should login the user using the server and API JWT token', () => {
     const authService = TestBed.inject(AuthService);
-    spyOn(authService, 'login').and.returnValue(of({token: '123'}));
+    spyOn(authService, 'login').and.returnValue(of({ token: '123' }));
+    component.loginForm.setValue({ username: 'test', password: 'test' });
     component.login();
     expect(authService.login).toHaveBeenCalled();
   });
 
   it('should store the user in the local storage', () => {
     const authService = TestBed.inject(AuthService);
-    spyOn(authService, 'login').and.returnValue(of({token: '123'}));
+    spyOn(authService, 'login').and.returnValue(of({ token: '123' }));
     spyOn(localStorage, 'setItem');
+    component.loginForm.setValue({ username: 'test', password: 'test' });
     component.login();
     expect(localStorage.setItem).toHaveBeenCalledWith('token', '123');
   });
 
   it('should ensure the user is redirected to the home page after login', () => {
     const authService = TestBed.inject(AuthService);
-    spyOn(authService, 'login').and.returnValue(of({token: '123'}));
+    spyOn(authService, 'login').and.returnValue(of({ token: '123' }));
+    component.loginForm.setValue({ username: 'test', password: 'test' });
     component.login();
     expect(router.navigateByUrl).toHaveBeenCalledWith('/');
   });
