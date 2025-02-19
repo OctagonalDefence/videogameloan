@@ -8,7 +8,7 @@ const dbConfig = {
   authentication: {
     type: 'ntlm', 
     options: {
-      domain: 'YOUR_WINDOWS_DOMAIN', 
+      domain: 'VICTUS', 
       userName: '', 
       password: '', 
     },
