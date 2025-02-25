@@ -4,6 +4,8 @@ import errorHandler from '../middleware/errorHandler.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+const token = jwt.sign({ username: user.Email }, process.env.JWT_SECRET);
+
 export const getAllUsers = async (req, res) => {
     try {
         let pool = await sql.connect(dbConfig);

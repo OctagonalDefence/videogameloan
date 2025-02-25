@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
-import { error } from 'node:console';
 
 @Component({
   selector: 'app-user-home',
@@ -9,25 +8,26 @@ import { error } from 'node:console';
   imports: [CommonModule],
   providers: [AuthService],
   templateUrl: './user-home.component.html',
-  styleUrl: './user-home.component.scss'
+  styleUrls: ['./user-home.component.scss']
 })
-export class UserHomeComponent {
-  user: any;
-  videogames: any;
+export class UserHomeComponent implements OnInit {
+  user: any = {};
+  videogames: any[] = [];
 
   constructor(private authService: AuthService) { }
+
+  ngOnInit() {
+    this.user.username = localStorage.getItem('username');
+    this.loadGames();
+  }
 
   logout() {
     this.authService.logout();
   }
 
-  getUserName() {
-    return localStorage.getItem('username');
-  }
-
   loadGames() {
     this.authService.getAllGames().subscribe({
-      next: (data) => { this.videogames = data; },
+      next: (data: Object) => { this.videogames = data as any[]; },
       error: (err) => { console.error(err); }
     });
   }
@@ -68,15 +68,8 @@ export class UserHomeComponent {
 
   rentVideogame(id: number) {
     this.authService.rentVideogame(id).subscribe({
-      next: () => {
-        alert('Videogame rented successfully');
-        this.loadGames();
-      },
-      error: (err: any) => {
-        console.error(err);
-        alert('Failed to rent videogame');
-      }
+      next: () => { console.log('Videogame rented successfully'); },
+      error: (err) => { console.error(err); }
     });
-
   }
 }

@@ -1,10 +1,11 @@
 <div class="container">
     <div class="row">
+        <h2>Home</h2>
         <div class="col-md-6 col-md-offset-3">
-            <h2>Home</h2>
+            
             <p>Benvingut, {{user.username}}</p>
-            <button (click)="logout()">Logout</button>
-            <a href="">Veure préstecs</a>
+            <button class="logout-button" (click)="logout()">Logout</button>
+            <a href="/loan-registry" class="see-loans-link">Veure préstecs</a>
         </div>
         <h2>Videojocs Disponibles Per a Llogar</h2>
         <table>
@@ -22,7 +23,7 @@
                 <td>                   
                      <button (click)="openVideogame(videogame.id)">Obrir Fitxa</button>                    
                 </td>
-
-
+            </tr>
         </table>
     </div>
+</div>

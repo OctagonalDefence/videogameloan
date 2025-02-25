@@ -16,3 +16,44 @@
     color: black;
     margin-bottom: 40px;
 }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: aquamarine;
+}
+
+.logout-button {
+    background-color: aquamarine;
+    color: black;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: crosshair;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.see-loans-link {
+    background-color: aquamarine;
+    color: black;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: crosshair;
+    margin-top: 20px;
+    text-decoration: none;
+    margin-left: 20px;
+}
