@@ -2,15 +2,13 @@ import sql from 'mssql';
 import dbConfig from '../config/dbConfig.js';
 import errorHandler from '../middleware/errorHandler.js';
 
-
 export const getAllGames = async (req, res) => {
     try {
         let pool = await sql.connect(dbConfig);
         let result = await pool.request()
-        .query(`SELECT * FROM Games`);
+            .query(`SELECT Nom, Any_Publicacio, Unitats, Plataforma, Publicadora FROM Videojoc`);
 
-        errorHandler(result, req, res);        
-
+        res.json(result.recordset);
     } catch (error) {
         errorHandler(error, req, res);
     }
@@ -22,11 +20,12 @@ export const getUnitsFromGame = async (req, res) => {
     try {
         let pool = await sql.connect(dbConfig);
         let result = await pool.request()
-        .query(`SELECT * FROM Units WHERE gameID = ${gameID}`);
+            .input('gameID', sql.Int, gameID)
+            .query(`SELECT Unitats FROM Videojoc WHERE Nom = @gameID`);
 
-        errorHandler(result, req, res);
-
+        res.json(result.recordset);
     } catch (error) {
         errorHandler(error, req, res);
     }
 };
+

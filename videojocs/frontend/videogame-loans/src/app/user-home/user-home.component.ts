@@ -27,7 +27,7 @@ export class UserHomeComponent implements OnInit {
 
   loadGames() {
     this.authService.getAllGames().subscribe({
-      next: (data: Object) => { this.videogames = data as any[]; },
+      next: (data: any) => { this.videogames = data; },
       error: (err) => { console.error(err); }
     });
   }
@@ -38,7 +38,7 @@ export class UserHomeComponent implements OnInit {
       console.error('Videogame not found');
       return;
     }
-
+  
     const popup = window.open('', '_blank', 'width=600,height=400');
     if (popup) {
       popup.document.write(`
@@ -57,7 +57,19 @@ export class UserHomeComponent implements OnInit {
             <p><strong>Desenvolupadora:</strong> ${videogame.developer}</p>
             <p><strong>Any de llançament:</strong> ${videogame.releaseYear}</p>
             <p><strong>Plataforma:</strong> ${videogame.platform}</p>
-            <button onclick="window.opener.rentVideogame(${id}); window.close();">Llogar</button>
+            <form id="rentForm">
+              <label for="days">Nombre de dies (màxim 14):</label>
+              <input type="number" id="days" name="days" min="1" max="14" required>
+              <button type="submit">Llogar</button>
+            </form>
+            <script>
+              document.getElementById('rentForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const days = document.getElementById('days').value;
+                window.opener.rentVideogame(${id}, days);
+                window.close();
+              });
+            </script>
           </body>
         </html>
       `);
@@ -65,11 +77,16 @@ export class UserHomeComponent implements OnInit {
       console.error('Failed to open popup window');
     }
   }
-
-  rentVideogame(id: number) {
-    this.authService.rentVideogame(id).subscribe({
+  
+  rentVideogame(id: number, days: number) {
+    const userID = localStorage.getItem('username');
+    if (userID) {
+      this.authService.rentVideogame(id, userID, days).subscribe({
       next: () => { console.log('Videogame rented successfully'); },
       error: (err) => { console.error(err); }
     });
   }
+
+}
+
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -25,18 +25,26 @@ export class AuthService {
   }
 
   getAllGames() {
-    return this.http.get(`${dbUrl}/games/getAllGames`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${dbUrl}/games/getAllGames`, { headers });
   }
 
   getAllLoans() {
-    return this.http.get(`${dbUrl}/loans/getAllLoans`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${dbUrl}/loans/getAllLoans`, { headers });
   }
 
-  rentVideogame(id: number) {
-    return this.http.post(`${dbUrl}/rentVideogame`, { id });
+  rentVideogame(gameID: number, userID: string, days: number) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${dbUrl}/games/rentVideoGame`, { gameID, userID, days }, { headers });
   }
 
-  returnVideogame(id: number) {
-    return this.http.post(`${dbUrl}/returnVideogame`, { id });
+  returnVideogame(gameID: number, userID: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${dbUrl}/games/returnVideoGame`, { gameID, userID }, { headers });
   }
 }

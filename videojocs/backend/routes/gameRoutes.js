@@ -4,7 +4,9 @@ import { getAllGames, getUnitsFromGame } from "../controllers/videogameControlle
 
 const GameRoutes = Router();
 
-GameRoutes.post('/getAllGames', authenticateJWT, getAllGames);
-GameRoutes.post('/getAllUnitsFromGame', authenticateJWT, getUnitsFromGame);
+GameRoutes.get('/getAllGames', authenticateJWT, getAllGames);
+GameRoutes.get('/getUnitsFromGame', authenticateJWT, getUnitsFromGame);
+
+
 
 export default GameRoutes;

@@ -2,50 +2,65 @@ import sql from 'mssql';
 import dbConfig from '../config/dbConfig.js';
 import errorHandler from '../middleware/errorHandler.js';
 
-export const getAllLoans = async (req, res) => {
+
+
+export const rentVideoGame = async (req, res) => {
+    const { userID, gameID, days } = req.body;
+
+    if (days > 14) {
+        return res.status(400).json({ error: 'Maximum rental period is 14 days' });
+    }
+
     try {
         let pool = await sql.connect(dbConfig);
         let result = await pool.request()
-        .query(`SELECT * FROM Loans`);
+            .query(`SELECT MAX(Codi) AS maxCodi FROM Prestem`);
 
-        errorHandler(result, req, res);        
+        const maxCodi = result.recordset[0].maxCodi || 0;
+        const newCodi = maxCodi + 1;
 
+        const dataFi = new Date();
+        dataFi.setDate(dataFi.getDate() + days);
+
+        await pool.request()
+            .input('codi', sql.Int, newCodi)
+            .input('userID', sql.NVarChar, userID)
+            .input('gameID', sql.NVarChar, gameID)
+            .input('dataFi', sql.Date, dataFi)
+            .query(`INSERT INTO Prestem (Codi, Email_Usuari, Nom_Videojoc, Data_inici, Data_fi) VALUES (@codi, @userID, @gameID, GETDATE(), @dataFi)`);
+
+        res.json({ message: 'Videogame rented successfully' });
     } catch (error) {
         errorHandler(error, req, res);
     }
-}
+};
 
-export const bookLoan = async (req, res) => {
-    const { userId, gameId, loanDate, returnDate } = req.body;
+export const returnVideoGame = async (req, res) => {
+    const { userID, gameID } = req.body;
 
     try {
         let pool = await sql.connect(dbConfig);
-        let result = await pool.request()
-        .input('userId', sql.Int, userId)
-        .input('gameId', sql.Int, gameId)
-        .input('loanDate', sql.Date, loanDate)
-        .input('returnDate', sql.Date, returnDate)
-        .query(`INSERT INTO Loans (userId, gameId, loanDate, returnDate) VALUES (@userId, @gameId, @loanDate, @returnDate)`);
+        await pool.request()
+            .input('userID', sql.NVarChar, userID)
+            .input('gameID', sql.NVarChar, gameID)
+            .query(`UPDATE Prestem SET Data_fi = GETDATE() WHERE Email_Usuari = @userID AND Nom_Videojoc = @gameID AND Data_fi IS NULL`);
 
-        errorHandler(result, req, res);
-
+        res.json({ message: 'Videogame returned successfully' });
     } catch (error) {
         errorHandler(error, req, res);
     }
-}
+};
 
-export const returnLoan = async (req, res) => {
-    const { userId, gameId } = req.body;
+export const getAllLoansFromUser = async (req, res) => {
+    const { userID } = req.body;
 
     try {
         let pool = await sql.connect(dbConfig);
         let result = await pool.request()
-        .input('userId', sql.Int, userId)
-        .input('gameId', sql.Int, gameId)
-        .query(`DELETE FROM Loans WHERE userId = @userId AND gameId = @gameId`);
+            .input('userID', sql.NVarChar, userID)
+            .query(`SELECT * FROM Prestem WHERE Email_Usuari = @userID`);
 
-        errorHandler(result, req, res);
-
+        res.json(result.recordset);
     } catch (error) {
         errorHandler(error, req, res);
     }

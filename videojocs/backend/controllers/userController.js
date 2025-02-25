@@ -4,7 +4,6 @@ import errorHandler from '../middleware/errorHandler.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const token = jwt.sign({ username: user.Email }, process.env.JWT_SECRET);
 
 export const getAllUsers = async (req, res) => {
     try {
@@ -31,8 +30,6 @@ export const login = async (req, res) => {
 
         const user = result.recordset[0];
 
-        console.log('Password:', password);
-        console.log('User Password:', user.Password);
 
         const isPasswordValid = await bcrypt.compare(password, user.Password);
         if (!isPasswordValid) {

@@ -1,11 +1,11 @@
 import { Router } from "express";
 import authenticateJWT  from "../middleware/jwtauth.js";
-import { getAllLoans, bookLoan, returnLoan } from "../controllers/loanController.js";
+import { getAllLoansFromUser, rentVideoGame, returnVideoGame } from "../controllers/loanController.js";
 
 const loanRoutes = Router();
 
-loanRoutes.post('/getAllLoans', authenticateJWT, getAllLoans);
-loanRoutes.post('/bookLoan', authenticateJWT, bookLoan);
-loanRoutes.post('/returnLoan', authenticateJWT, returnLoan);
+loanRoutes.post('/getAllLoans', authenticateJWT, getAllLoansFromUser);
+loanRoutes.post('/rentVideoGame', authenticateJWT, rentVideoGame);
+loanRoutes.post('/returnVideoGame', authenticateJWT, returnVideoGame);
 
 export default loanRoutes;
