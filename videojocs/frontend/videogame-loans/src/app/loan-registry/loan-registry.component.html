@@ -1,0 +1,23 @@
+<div class="container">
+    <table>
+       <tr>
+           <th>Id</th>
+           <th>Usuari</th>
+           <th>Videojoc</th>
+           <th>Data de préstec</th>
+           <th>Data de devolució</th>
+           <th>Accions</th>
+       </tr>
+       <tr *ngFor="let loan of loans">
+           <td>{{loan.id}}</td>
+           <td>{{loan.user.username}}</td>
+           <td>{{loan.videogame.title}}</td>
+           <td>{{loan.loanDate | date:'dd/MM/yyyy'}}</td>
+           <td>{{loan.returnDate | date:'dd/MM/yyyy'}}</td>
+           <td>
+           <button (click)="returnVideogame(loan.id)">Retorna</button>
+           </td>
+       </tr>
+    </table>
+   
+   </div>

@@ -1,18 +1,18 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const dbConfig = {
-  server: process.env.DB_SERVER || 'VICTUS\\SQL_ERIC',
-  database: process.env.DB_DATABASE || 'videogameloans',
+  server: "localhost",
+  database: process.env.DB_DATABASE || "videogameloans",
+  user: "victus",
+  password: "victus",
   options: {
-    encrypt: true, 
-    trustServerCertificate: true, 
-  },
-  authentication: {
-    type: 'ntlm', 
-    options: {
-      domain: 'VICTUS', 
-      userName: '', 
-      password: '', 
-    },
+    encrypt: true,
+    trustServerCertificate: true,
   },
 };
+
+console.log('DB Config:', dbConfig);
 
 export default dbConfig;

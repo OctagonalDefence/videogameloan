@@ -28,10 +28,14 @@ export class LoginComponentComponent {
 
   login() {
     this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe((data) => {
-      if (data) {
+      if (data && data.token) {
         localStorage.setItem('token', data.token);
-        this.router.navigate(['/']);
+        localStorage.setItem('username', this.loginForm.value.username);
+        this.router.navigate(['/user-home']);
       }
+    }, (error) => {
+      console.error('Login failed', error);
+      alert('Login failed. Please check your username and password.');
     });
   }
 }

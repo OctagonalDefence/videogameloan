@@ -1,1 +1,28 @@
-<p>user-home works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h2>Home</h2>
+            <p>Benvingut, {{user.username}}</p>
+            <button (click)="logout()">Logout</button>
+            <a href="">Veure préstecs</a>
+        </div>
+        <h2>Videojocs Disponibles Per a Llogar</h2>
+        <table>
+            <tr>
+                <td>Nom</td>
+                <td>Desenvolupadora</td>
+                <td>Any de llançament</td>
+                <td>Plataforma</td>   
+            </tr>
+            <tr *ngFor="let videogame of videogames">
+                <td>{{videogame.title}}</td>
+                <td>{{videogame.developer}}</td>
+                <td>{{videogame.releaseYear}}</td>
+                <td>{{videogame.platform}}</td>
+                <td>                   
+                     <button (click)="openVideogame(videogame.id)">Obrir Fitxa</button>                    
+                </td>
+
+
+        </table>
+    </div>

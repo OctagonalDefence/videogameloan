@@ -5,6 +5,6 @@ import { getAllUsers, login } from "../controllers/userController.js";
 const UserRoutes = Router();
 
 UserRoutes.post('/getAllUsers', authenticateJWT, getAllUsers);
-UserRoutes.post('/login', authenticateJWT, login);
+UserRoutes.post('/login', login);
 
 export default UserRoutes;
