@@ -7,7 +7,11 @@ const dbUrl = 'http://localhost:3000/api';
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class AuthService {
+
+  dbUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
 
@@ -24,10 +28,10 @@ export class AuthService {
     localStorage.removeItem('username');
   }
 
-  getAllGames() {
+  getAllGames(): Observable<any[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${dbUrl}/games/getAllGames`, { headers });
+    return this.http.get<any[]>(`${dbUrl}/games/getAllGames`, { headers });
   }
 
   getAllLoans() {

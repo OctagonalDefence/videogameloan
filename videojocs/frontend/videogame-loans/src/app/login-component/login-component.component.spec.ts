@@ -4,28 +4,31 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 describe('LoginComponentComponent', () => {
   let component: LoginComponentComponent;
   let fixture: ComponentFixture<LoginComponentComponent>;
-  let router: Router;
+  let router: jasmine.SpyObj<Router>;
+  let authService: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['login']);
 
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, HttpClientModule, LoginComponentComponent], 
       providers: [
         FormBuilder, 
-        AuthService,
+        { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy }
       ], 
     }).compileComponents();
     
     fixture = TestBed.createComponent(LoginComponentComponent);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router);
+    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     fixture.detectChanges();
   });
 
@@ -50,28 +53,34 @@ describe('LoginComponentComponent', () => {
     expect(component.loginForm.controls['password']).toBeTruthy();
   });
 
-  it('should login the user using the server and API JWT token', () => {
-    const authService = TestBed.inject(AuthService);
-    spyOn(authService, 'login').and.returnValue(of({ token: '123' }));
-    component.loginForm.setValue({ username: 'test', password: 'test' });
+  it('should call authService.login on login', () => {
+    authService.login.and.returnValue(of({ token: '12345' }));
+    component.loginForm.setValue({ username: 'testuser', password: 'password' });
     component.login();
-    expect(authService.login).toHaveBeenCalled();
+    expect(authService.login).toHaveBeenCalledWith('testuser', 'password');
   });
 
-  it('should store the user in the local storage', () => {
-    const authService = TestBed.inject(AuthService);
-    spyOn(authService, 'login').and.returnValue(of({ token: '123' }));
+  it('should navigate to /user-home on successful login', () => {
+    authService.login.and.returnValue(of({ token: '12345' }));
+    component.loginForm.setValue({ username: 'testuser', password: 'password' });
+    component.login();
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/user-home');
+  });
+
+  it('should store token and username in localStorage on successful login', () => {
     spyOn(localStorage, 'setItem');
-    component.loginForm.setValue({ username: 'test', password: 'test' });
+    authService.login.and.returnValue(of({ token: '12345' }));
+    component.loginForm.setValue({ username: 'testuser', password: 'password' });
     component.login();
-    expect(localStorage.setItem).toHaveBeenCalledWith('token', '123');
+    expect(localStorage.setItem).toHaveBeenCalledWith('token', '12345');
+    expect(localStorage.setItem).toHaveBeenCalledWith('username', 'testuser');
   });
 
-  it('should ensure the user is redirected to the home page after login', () => {
-    const authService = TestBed.inject(AuthService);
-    spyOn(authService, 'login').and.returnValue(of({ token: '123' }));
-    component.loginForm.setValue({ username: 'test', password: 'test' });
+  it('should show alert on login failure', () => {
+    spyOn(window, 'alert');
+    authService.login.and.returnValue(throwError('Login failed'));
+    component.loginForm.setValue({ username: 'testuser', password: 'password' });
     component.login();
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/');
+    expect(window.alert).toHaveBeenCalledWith('Login failed. Please check your username and password.');
   });
 });

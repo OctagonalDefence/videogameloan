@@ -27,11 +27,20 @@ export class UserHomeComponent implements OnInit {
 
   loadGames() {
     this.authService.getAllGames().subscribe({
-      next: (data: any) => { this.videogames = data; },
-      error: (err) => { console.error(err); }
+      next: (data: any) => {
+        console.log('Games loaded:', data);
+        this.videogames = data.map((game: any) => ({
+          title: game.Nom,
+          releaseYear: game.Any_Publicacio,
+          platform: game.Plataforma,
+          developer: game.Publicadora
+        }));
+      },
+      error: (err) => {
+        console.error(err);
+      }
     });
   }
-
   openVideogame(id: number) {
     const videogame = this.videogames.find((game: any) => game.id === id);
     if (!videogame) {
