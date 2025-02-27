@@ -6,7 +6,7 @@ export const getAllGames = async (req, res) => {
     try {
         let pool = await sql.connect(dbConfig);
         let result = await pool.request()
-            .query(`SELECT Nom, Any_Publicacio, Unitats, Plataforma, Publicadora FROM Videojoc`);
+            .query(`SELECT Nom, Any_Publicacio, Unitats, Plataforma, Publicadora FROM Videojoc ORDER BY Any_Publicacio`);
 
         res.json(result.recordset);
     } catch (error) {

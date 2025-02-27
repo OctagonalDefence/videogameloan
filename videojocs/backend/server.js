@@ -8,7 +8,7 @@ import loanRoutes from './routes/loanRoutes.js';
 
 import dotenv from 'dotenv';
 
-const IP = 'localhost';
+const IP = process.env.DB_SERVER;
 
 dotenv.config();
 const app = express();
