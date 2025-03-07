@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -8,7 +9,6 @@
     border-top-color: aquamarine;
     padding: 5%;
     padding-top: 20px;
-    
 }
 
 .container h2 {
@@ -17,3 +17,54 @@
     margin-bottom: 40px;
 }
 
+.home-button {
+    background-color: aquamarine;
+    color: black;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: aquamarine;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 0;
+        border-top-width: 50px;
+    }
+
+    .container h2 {
+        font-size: 2em;
+    }
+
+    .home-button {
+        font-size: 1em;
+        padding: 5px 10px;
+    }
+
+    table {
+        width: 100%;
+        font-size: 0.8em;
+    }
+
+    th, td {
+        padding: 4px;
+    }
+}

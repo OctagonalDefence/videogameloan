@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loan-registry',
@@ -13,7 +14,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoanRegistryComponent implements OnInit {
   loans: any[] = [];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.loadLoans();
@@ -37,5 +38,9 @@ export class LoanRegistryComponent implements OnInit {
       next: () => { this.loadLoans(); },
       error: (err) => { console.error(err); }
     });
+  }
+
+  goToUserHome() {
+    this.router.navigate(['/user-home']);
   }
 }
