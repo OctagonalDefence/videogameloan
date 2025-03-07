@@ -4,7 +4,7 @@ import { getAllUsers, login, register } from "../controllers/userController.js";
 
 const UserRoutes = Router();
 
-UserRoutes.post('/getAllUsers', authenticateJWT, getAllUsers);
+UserRoutes.get('/getAllUsers', authenticateJWT, getAllUsers);
 UserRoutes.post('/login', login);
 UserRoutes.post('/register', register);
 

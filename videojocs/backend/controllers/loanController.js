@@ -48,7 +48,7 @@ export const returnVideoGame = async (req, res) => {
   }
 };
 
-export const getAllLoansFromUser = async (req, res) => {
+export const getAllLoans = async (req, res) => {
   const { userID } = req.body;
 
   try {
