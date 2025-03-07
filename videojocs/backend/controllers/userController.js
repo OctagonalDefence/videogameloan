@@ -15,16 +15,24 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { username, password, email } = req.body;
+  const { email, name, password } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
     const pool = await getPool();
-    await pool.request()
-      .input('username', sql.NVarChar, username)
-      .input('password', sql.NVarChar, hashedPassword)
+    const checkUser = await pool.request()
       .input('email', sql.NVarChar, email)
-      .query('INSERT INTO Usuari (Email, Nom, Password, Tipus) VALUES (@email, @username, @password, 1)');
+      .query('SELECT Email FROM Usuari WHERE Email = @email');
+
+    if (checkUser.recordset.length > 0) {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pool.request()
+      .input('email', sql.NVarChar, email)
+      .input('name', sql.NVarChar, name)
+      .input('password', sql.NVarChar, hashedPassword)
+      .query('INSERT INTO Usuari (Email, Nom, Password, Tipus) VALUES (@email, @name, @password, 1)');
     res.json({ message: 'User registered' });
   } catch (error) {
     errorHandler(error, req, res);

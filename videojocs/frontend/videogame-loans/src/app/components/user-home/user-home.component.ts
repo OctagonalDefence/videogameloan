@@ -106,6 +106,7 @@ export class UserHomeComponent implements OnInit {
           </body>
         </html>
       `);
+      popup.document.close();
     } else {
       console.error('Failed to open popup window');
     }

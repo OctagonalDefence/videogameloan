@@ -1,34 +1,36 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-        <h2>Login</h2>
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
-            <div class="form-group">
-                <label for="username">Usuari</label><br>
-                <input type="text" formControlName="username" class="form-control" id="username" placeholder="Usuari"><br>
-                <label *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched" class="text-danger">Es requereix un usuari</label><br>
-                <label for="password">Contrassenya</label><br>
-                <input type="password" formControlName="password" class="form-control" id="password" placeholder="Contrassenya"><br>
-                <label *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-danger">Es requereix una contrassenya</label><br>
-                <button type="submit" class="envia" [disabled]="loginForm.invalid">Login</button>
-            </div>
-        </form>
-        <button (click)="toggleRegisterForm()" class="envia">Registra't</button>
+            <h2>Login</h2>
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <div class="form-group">
+                    <label for="username">Email</label><br>
+                    <input type="text" formControlName="username" class="form-control" id="username" placeholder="Email"><br>
+                    <label *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched" class="text-danger">Es requereix un email registrat</label><br>
+                    <label for="password">Contrassenya</label><br>
+                    <input type="password" formControlName="password" class="form-control" id="password" placeholder="Contrassenya"><br>
+                    <label *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-danger">Es requereix una contrassenya</label><br>
+                    <button type="submit" class="envia" [disabled]="loginForm.invalid">Login</button>
+                </div>
+            </form>
+            <button (click)="toggleRegisterForm()" class="envia">Registra't</button>
             <div *ngIf="showRegisterForm">
-                <h2>Register</h2>
+                <h2>Registra't</h2>
                 <form [formGroup]="registerForm" (ngSubmit)="register()">
                     <div class="form-group">
                         <label for="email">Email</label><br>
                         <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email"><br>
-                        <label *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="text-danger">Valid email is required</label><br>
-                        <label for="name">Name</label><br>
-                        <input type="text" formControlName="name" class="form-control" id="name" placeholder="Name"><br>
-                        <label *ngIf="registerForm.controls['name'].invalid && registerForm.controls['name'].touched" class="text-danger">Name is required</label><br>
-                        <label for="password">Password</label><br>
-                        <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password"><br>
-                        <label *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="text-danger">Password is required</label><br>
-                        <button type="submit" class="envia" [disabled]="registerForm.invalid">Register</button>
+                        <label *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="text-danger">Es requereix un email valid!</label><br>
+                        <label for="name">Usuari</label><br>
+                        <input type="text" formControlName="name" class="form-control" id="name" placeholder="Usuari"><br>
+                        <label *ngIf="registerForm.controls['name'].invalid && registerForm.controls['name'].touched" class="text-danger">Es requereix un nom</label><br>
+                        <label for="password">Contrassenya</label><br>
+                        <input type="password" formControlName="password" class="form-control" id="password" placeholder="Contrassenya"><br>
+                        <label *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="text-danger">Es requereix una contrassenya</label><br>
+                        <button type="submit" class="envia" [disabled]="registerForm.invalid">Registra't</button>
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
 </div>

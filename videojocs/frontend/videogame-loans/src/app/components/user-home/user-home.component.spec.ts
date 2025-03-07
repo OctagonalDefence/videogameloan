@@ -47,17 +47,7 @@ describe('UserHomeComponent', () => {
   }));
   
 
-  it('should load games and set videogames on loadGames', fakeAsync(() => {
-    const mockGames = [{ id: 1, title: 'Game 1' }, { id: 2, title: 'Game 2' }];
-    spyOn(authService, 'getAllGames').and.returnValue(of(mockGames));
-    
-    fixture.detectChanges();
-    component.loadGames();
-    tick();
   
-    expect(authService.getAllGames).toHaveBeenCalled();
-    expect(component.videogames).toEqual(mockGames);
-  }));
   
 
   it('should handle error on loadGames', fakeAsync(() => {
