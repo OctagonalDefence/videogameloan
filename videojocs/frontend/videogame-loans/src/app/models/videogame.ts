@@ -1,5 +1,6 @@
 export class Videogame {
     
+    UID: number = 0;
     nom: string = '';
     any: number = 0;
     plataforma: string = '';

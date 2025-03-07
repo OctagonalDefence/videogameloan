@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
 import { UserHomeComponent } from './user-home.component';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 describe('UserHomeComponent', () => {
   let component: UserHomeComponent;

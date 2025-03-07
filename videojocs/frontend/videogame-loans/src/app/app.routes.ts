@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { LoanRegistryComponent } from './loan-registry/loan-registry.component';
-import { LoginComponentComponent } from './login-component/login-component.component';
-import { UserHomeComponent } from './user-home/user-home.component';
-import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { LoanRegistryComponent } from './components/loan-registry/loan-registry.component';
+import { LoginComponentComponent } from './components/login-component/login-component.component';
+import { UserHomeComponent } from './components/user-home/user-home.component';
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponentComponent },

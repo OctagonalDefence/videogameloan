@@ -23,6 +23,10 @@ export class AuthService {
     return this.http.post<{ token: string }>(`${dbUrl}/users/login`, { username, password });
   }
 
+  register(user: { email: string, name: string, password: string }): Observable<any> {
+    return this.http.post(`${dbUrl}/users/register`, user);
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');

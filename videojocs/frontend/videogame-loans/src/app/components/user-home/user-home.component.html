@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row">
+        <h2>Home</h2>
+        <div class="col-md-6 col-md-offset-3">
+            <p>Benvingut, {{user.username}}</p>
+            <button class="logout-button" (click)="logout()">Logout</button>
+            <a href="/loan-registry" class="see-loans-link">Veure préstecs</a>
+        </div>
+        <h2>Videojocs Disponibles Per a Llogar</h2>
+        <input type="text" placeholder="Cerca per nom" [(ngModel)]="searchTerm" (input)="filterGames()" class="search-bar">
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Desenvolupadora</th>
+                <th>Any de llançament</th>
+                <th>Plataforma</th>   
+            </tr>
+            <tr *ngFor="let videogame of filteredVideogames">
+                <td>{{videogame.nom}}</td>
+                <td>{{videogame.desenvolupadora}}</td>
+                <td>{{videogame.any}}</td>
+                <td>{{videogame.plataforma}}</td>
+                <td>                   
+                     <button (click)="openVideogame(videogame.UID)">Obrir Fitxa</button>                    
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

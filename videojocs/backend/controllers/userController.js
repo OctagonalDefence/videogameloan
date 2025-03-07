@@ -15,6 +15,26 @@ export const getAllUsers = async (req, res) => {
     }
 };
 
+export const register = async (req, res) => {
+    const { username, password, email } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        let pool = await sql.connect(dbConfig);
+        let result = await pool.request()
+        
+            .input('username', sql.NVarChar, username)
+            .input('password', sql.NVarChar, hashedPassword)
+            .input('email', sql.NVarChar, email)
+            .query('INSERT INTO Usuari (Email, Nom, Password, Tipus) VALUES (@email, @username, @password, 1)');
+
+        res.json({ message: 'User registered' });
+    } catch (error) {
+        errorHandler(error, req, res);
+    }
+};
+
 export const login = async (req, res) => {
     const { username, password } = req.body;
 

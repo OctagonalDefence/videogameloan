@@ -1,0 +1,79 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-top-width: 150px;
+    border-top: solid 100px;
+    border-top-color: aquamarine;
+    padding: 5%;
+    padding-top: 20px;
+}
+
+.container h2 {
+    font-size: 3em;
+    color: black;
+    margin-bottom: 40px;
+}
+
+.container input {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.container label {
+    font-size: 1.5em;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.envia {
+    background-color: aquamarine;
+    color: black;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: crosshair;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.form-group {
+    text-align: center;
+    display: grid;
+    justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 0;
+        border-top-width: 50px;
+    }
+
+    .container h2 {
+        font-size: 2em;
+    }
+
+    .container input {
+        padding: 5px;
+    }
+
+    .container label {
+        font-size: 1em;
+    }
+
+    .envia {
+        font-size: 1em;
+        padding: 5px 10px;
+        margin-top: 10px;
+    }
+
+    .form-group {
+        text-align: center;
+        display: grid;
+        justify-content: center;
+    }
+}

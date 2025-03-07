@@ -8,7 +8,6 @@
     border-top-color: aquamarine;
     padding: 5%;
     padding-top: 20px;
-    
 }
 
 .container h2 {
@@ -17,20 +16,29 @@
     margin-bottom: 40px;
 }
 
-.container input {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.search-bar {
+    width: 100%;
     padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2em;
 }
 
-.container label {
-    font-size: 1.5em;
-    color: black;
-    margin-bottom: 5px;
+table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.envia {
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: aquamarine;
+}
+
+.logout-button, .see-loans-link {
     background-color: aquamarine;
     color: black;
     font-size: 1.5em;
@@ -40,45 +48,40 @@
     cursor: crosshair;
     margin-top: 20px;
     font-weight: bold;
+    text-decoration: none;
 }
 
-.form-group {
-    text-align: center;
-    display: grid;
-    justify-content: center;
+.see-loans-link {
+    margin-left: 20px;
 }
 
 @media screen and (max-width: 600px) {
     .container {
         padding: 0;
         border-top-width: 50px;
-        
     }
 
     .container h2 {
         font-size: 2em;
     }
 
-    .container input {
+    .search-bar {
+        font-size: 1em;
         padding: 5px;
     }
 
-    .container label {
-        font-size: 1em;
+    table {
+        width: 100%;
+        font-size: 0.8em;
     }
 
-    .envia {
+    th, td {
+        padding: 4px;
+    }
+
+    .logout-button, .see-loans-link {
         font-size: 1em;
         padding: 5px 10px;
         margin-top: 10px;
     }
-
-    .form-group {
-        text-align: center;
-        display: grid;
-        justify-content: center;
-    }
-
-
-    
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-login-component',
@@ -14,15 +15,25 @@ import { Router } from '@angular/router';
 })
 export class LoginComponentComponent {
   loginForm: FormGroup;
+  registerForm: FormGroup;
+  showRegisterForm = false;
 
   constructor(
     public formBuilder: FormBuilder,
     private authService: AuthService,
     public router: Router
   ) {
+    const user = new User();
+
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: [user.name, Validators.required],
+      password: [user.password, Validators.required]
+    });
+
+    this.registerForm = this.formBuilder.group({
+      email: [user.email, [Validators.required, Validators.email]],
+      name: [user.name, Validators.required],
+      password: [user.password, Validators.required]
     });
   }
 
@@ -36,6 +47,21 @@ export class LoginComponentComponent {
     }, (error) => {
       console.error('Login failed', error);
       alert('Login failed. Please check your username and password.');
+    });
+  }
+
+  toggleRegisterForm() {
+    this.showRegisterForm = !this.showRegisterForm;
+  }
+
+  register() {
+    this.authService.register(this.registerForm.value).subscribe(() => {
+      alert('Registration successful!');
+      this.showRegisterForm = false;
+      this.router.navigate(['/login']);
+    }, (error) => {
+      console.error('Registration failed', error);
+      alert('Registration failed. Please try again.');
     });
   }
 }
