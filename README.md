@@ -59,6 +59,14 @@ node server.js
 
 ---
 
+---
+
+## 🛠️ Diagrama Entitat-Relació
+[Enllaç al model ER](https://github.com/OctagonalDefence/videogameloan](https://github.com/OctagonalDefence/videogameloan/blob/main/inicials/ModelER.png
+) 
+
+---
+
 ## 🔗 Endpoints
 
 ### 🔹 Autenticació
