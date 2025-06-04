@@ -44,15 +44,27 @@ export class AuthService {
     return this.http.get(`${dbUrl}/loans/getAllLoans`, { headers });
   }
 
-  rentVideogame(gameID: number, userID: string, days: number) {
+  getUserLoans(userID: string) {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.post(`${this.dbUrl}/loans/getUserLoans`, { userID }, { headers });
+}
+
+  rentVideogame(gameID: string, userID: string, days: number) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${dbUrl}/games/rentVideoGame`, { gameID, userID, days }, { headers });
+    return this.http.post(`${dbUrl}/loans/rentVideoGame`, { gameID, userID, days }, { headers });
   }
 
-  returnVideogame(gameID: number, userID: string) {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${dbUrl}/games/returnVideoGame`, { gameID, userID }, { headers });
-  }
+  returnVideogame(gameID: string, userID: string) {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.post(`${dbUrl}/loans/returnVideoGame`, { gameID, userID }, { headers });
+}
+updateLoanDays(loanId: number, days: number) {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.post(`${this.dbUrl}/loans/updateLoanDays`, { loanId, days }, { headers });
+}
+
 }

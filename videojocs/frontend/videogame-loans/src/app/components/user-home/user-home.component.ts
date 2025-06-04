@@ -21,8 +21,13 @@ export class UserHomeComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.user.username = localStorage.getItem('username');
-    this.loadGames();
+  this.user.username = localStorage.getItem('username');
+  this.loadGames();
+  (window as any).rentVideogame = (uid: string, days: number) => this.rentVideogame(uid, days);
+}
+
+  ngOnDestroy() {
+    delete (window as any).rentVideogame;
   }
 
   logout() {
@@ -33,7 +38,7 @@ export class UserHomeComponent implements OnInit {
     this.authService.getAllGames().subscribe({
       next: (data: any) => {
         console.log('Games loaded:', data);
-        this.videogames = data.map((game: any) => new Videogame({
+        this.videogames = data.map((game: any) => ({
           UID: game.UID,
           nom: game.Nom,
           any: game.Any_Publicacio,
@@ -41,7 +46,8 @@ export class UserHomeComponent implements OnInit {
           desenvolupadora: game.Publicadora,
           unitats: game.Unitats
         }));
-        this.filteredVideogames = this.videogames;
+        this.filteredVideogames = [...this.videogames];
+
       },
       error: (err) => {
         console.error(err);
@@ -50,75 +56,62 @@ export class UserHomeComponent implements OnInit {
   }
 
   filterGames() {
-    this.filteredVideogames = this.videogames.filter(videogame => 
+    this.filteredVideogames = this.videogames.filter(videogame =>
       videogame.nom.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
-  openVideogame(id: number) {
-    const videogame = this.videogames.find((game: Videogame) => game.UID === id);
-    if (!videogame) {
-      console.error('Videogame not found');
-      return;
-    }
+ openVideogame(uid: string) {
+  const videogame = this.filteredVideogames.find(game => game.UID === uid);
+  console.log('Opening game with UID:', uid, 'Found:', videogame);
 
-    const popup = window.open('', '_blank', 'width=600,height=400');
-    if (popup) {
-      popup.document.write(`
-        <html>
-          <head>
-            <title>${videogame.nom}</title>
-            <style>
-              body { font-family: Arial, sans-serif; padding: 20px; }
-              h1 { font-size: 24px; }
-              p { font-size: 18px; }
-              button { padding: 10px 20px; font-size: 16px; }
-              form { margin-top: 20px; }
-              label { display: block; margin-bottom: 10px; }
-              input { padding: 5px; margin-bottom: 10px; }
-              @media screen and (max-width: 600px) {
-                body { padding: 10px; }
-                h1 { font-size: 20px; }
-                p { font-size: 16px; }
-                button { padding: 8px 16px; font-size: 14px; }
-                input { padding: 4px; }
-              }
-            </style>
-          </head>
-          <body>
-            <h1>${videogame.nom}</h1>
-            <p><strong>Desenvolupadora:</strong> ${videogame.desenvolupadora}</p>
-            <p><strong>Any de llançament:</strong> ${videogame.any}</p>
-            <p><strong>Plataforma:</strong> ${videogame.plataforma}</p>
-            <form id="rentForm">
-              <label for="days">Nombre de dies (màxim 14):</label>
-              <input type="number" id="days" name="days" min="1" max="14" required>
-              <button type="submit">Llogar</button>
-            </form>
-            <script>
-              document.getElementById('rentForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const days = document.getElementById('days').value;
-                window.opener.rentVideogame(${id}, days);
-                window.close();
-              });
-            </script>
-          </body>
-        </html>
-      `);
-      popup.document.close();
-    } else {
-      console.error('Failed to open popup window');
-    }
+  if (!videogame) {
+    console.error('Videogame not found');
+    return;
   }
 
-  rentVideogame(id: number, days: number) {
-    const userID = localStorage.getItem('username');
-    if (userID) {
-      this.authService.rentVideogame(id, userID, days).subscribe({
-        next: () => { console.log('Videogame rented successfully'); },
-        error: (err) => { console.error(err); }
-      });
-    }
+  const popup = window.open('', `videogame_${uid}_${Date.now()}`, 'width=600,height=400');
+  if (!popup) {
+    console.error('Popup blocked or failed to open');
+    return;
   }
+
+  popup.document.write(`
+    <html>
+      <head>
+        <title>${videogame.nom}</title>
+      </head>
+      <body>
+        <h1>${videogame.nom}</h1>
+        <p><strong>Desenvolupadora:</strong> ${videogame.desenvolupadora}</p>
+        <p><strong>Any de llançament:</strong> ${videogame.any}</p>
+        <p><strong>Plataforma:</strong> ${videogame.plataforma}</p>
+        <form id="rentForm">
+          <label for="days">Dies (1–14):</label>
+          <input type="number" id="days" min="1" max="14" required>
+          <button type="submit">Llogar</button>
+        </form>
+        <script>
+          document.getElementById('rentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const days = parseInt(document.getElementById('days').value);
+            window.opener.rentVideogame('${videogame.nom}', days);
+            window.close();
+          });
+        </script>
+      </body>
+    </html>
+  `);
+  popup.document.close();
+}
+
+rentVideogame(nom: string, days: number) {
+  const userID = localStorage.getItem('username');
+  if (userID) {
+    this.authService.rentVideogame(nom, userID, days).subscribe({
+      next: () => { console.log('Videogame rented successfully'); },
+      error: (err) => { console.error(err); }
+    });
+  }
+}
 }

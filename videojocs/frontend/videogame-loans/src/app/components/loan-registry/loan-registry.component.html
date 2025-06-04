@@ -4,8 +4,6 @@
   <table>
     <thead>
       <tr>
-        <th>Id</th>
-        <th>Usuari</th>
         <th>Videojoc</th>
         <th>Data de préstec</th>
         <th>Data de devolució</th>
@@ -13,16 +11,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let loan of loans">
-        <td>{{loan.id}}</td>
-        <td>{{loan.user.username}}</td>
-        <td>{{loan.videogame.title}}</td>
-        <td>{{loan.loanDate | date:'dd/MM/yyyy'}}</td>
-        <td>{{loan.returnDate | date:'dd/MM/yyyy'}}</td>
-        <td>
-          <button (click)="returnVideogame(loan.id)">Retorna</button>
-        </td>
-      </tr>
-    </tbody>
+  <tr *ngFor="let loan of loans">    
+    <td>{{loan.Nom_Videojoc}}</td>
+    <td>{{loan.Data_inici | date:'dd/MM/yyyy'}}</td>
+    <td>{{loan.Data_fi ? (loan.Data_fi | date:'dd/MM/yyyy') : '-'}}</td>
+    <td>
+      <button class="returnVideogame" (click)="returnVideogame(loan.Codi)">Retorna</button>
+      <button (click)="editLoanDays(loan.Codi)">Edita Dies</button>
+
+    </td>
+  </tr>
+</tbody>
   </table>
 </div>
