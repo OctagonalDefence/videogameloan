@@ -48,7 +48,6 @@ export const updateLoanDays = async (req, res) => {
 
   try {
     const pool = await getPool();
-    // Get Data_inici for this loan
     const result = await pool.request()
       .input('loanId', sql.Int, loanId)
       .query('SELECT Data_inici FROM Prestem WHERE Codi = @loanId');

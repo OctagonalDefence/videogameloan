@@ -57,14 +57,15 @@ export class AuthService {
   }
 
   returnVideogame(gameID: string, userID: string) {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${dbUrl}/loans/returnVideoGame`, { gameID, userID }, { headers });
-  }
-  updateLoanDays(loanId: number, days: number) {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${this.dbUrl}/loans/updateLoanDays`, { loanId, days }, { headers });
-  }
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.request('delete', `${this.dbUrl}/loans/returnVideoGame`, { body: { gameID, userID }, headers });
+}
+
+updateLoanDays(loanId: number, days: number) {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.put(`${this.dbUrl}/loans/updateLoanDays`, { loanId, days }, { headers });
+}
 
 }

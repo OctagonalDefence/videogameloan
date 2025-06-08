@@ -6,8 +6,8 @@ const loanRoutes = Router();
 
 loanRoutes.get('/getAllLoans', authenticateJWT, getAllLoans);
 loanRoutes.post('/rentVideoGame', authenticateJWT, rentVideoGame);
-loanRoutes.post('/returnVideoGame', authenticateJWT, returnVideoGame);
+loanRoutes.delete('/returnVideoGame', authenticateJWT, returnVideoGame);
 loanRoutes.post('/getUserLoans', authenticateJWT, getUserLoans);
-loanRoutes.post('/updateLoanDays', authenticateJWT, updateLoanDays);
+loanRoutes.put('/updateLoanDays', authenticateJWT, updateLoanDays);
 
 export default loanRoutes;
