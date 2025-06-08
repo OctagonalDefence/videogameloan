@@ -1,10 +1,13 @@
 {
   "name": "videogame-loans",
+  "author": "Eric Romero",
+  "description": "A videogame loan management application built with Angular and Express.",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
+    "run dev": "ng build --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:videogame-loans": "node dist/videogame-loans/server/server.mjs"

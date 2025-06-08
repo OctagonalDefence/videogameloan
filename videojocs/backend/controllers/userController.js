@@ -16,6 +16,10 @@ export const getAllUsers = async (req, res) => {
 
 export const register = async (req, res) => {
   const { email, name, password } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   try {
     const pool = await getPool();

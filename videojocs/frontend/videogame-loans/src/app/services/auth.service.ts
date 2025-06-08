@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const dbUrl = 'http://localhost:3000/api';
+const dbUrl = 'http://localhost:3000/api/v1';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ const dbUrl = 'http://localhost:3000/api';
 
 export class AuthService {
 
-  dbUrl = 'http://localhost:3000/api';
+  dbUrl = 'http://localhost:3000/api/v1';
 
   constructor(private http: HttpClient) { }
 

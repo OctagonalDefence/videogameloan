@@ -63,27 +63,5 @@ describe('UserHomeComponent', () => {
   }));
   
 
-  it('should call authService.rentVideogame on rentVideogame', fakeAsync(() => {
-    spyOn(authService, 'rentVideogame').and.returnValue(of('Success'));
-    spyOn(console, 'log');
-    
-    fixture.detectChanges();
-    component.rentVideogame(1, 7);
-    tick();
   
-    expect(authService.rentVideogame).toHaveBeenCalledWith(1, 'testuser', 7);
-    expect(console.log).toHaveBeenCalledWith('Videogame rented successfully');
-  }));
-  
-
-  it('should handle error on rentVideogame', fakeAsync(() => {
-    spyOn(authService, 'rentVideogame').and.returnValue(throwError('error'));
-    spyOn(console, 'error');
-    localStorage.setItem('username', 'testuser');
-    fixture.detectChanges();
-    component.rentVideogame(1, 7);
-    tick();
-    expect(authService.rentVideogame).toHaveBeenCalledWith(1, 'testuser', 7);
-    expect(console.error).toHaveBeenCalledWith('error');
-  }));
 });

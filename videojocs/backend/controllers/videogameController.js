@@ -7,6 +7,8 @@ export const getAllGames = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
+    const sortBy = req.query.sortBy || 'Any_Publicacio';
+    const order = req.query.order === 'desc' ? 'DESC' : 'ASC';
 
     const pool = await getPool();
 
@@ -17,7 +19,7 @@ export const getAllGames = async (req, res) => {
     const result = await pool.request()
       .query(`SELECT UID, Nom, Any_Publicacio, Unitats, Plataforma, Publicadora
               FROM Videojoc
-              ORDER BY Any_Publicacio
+              ORDER BY ${sortBy} ${order}
               OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY`);
 
     res.json({
