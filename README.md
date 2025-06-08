@@ -208,6 +208,6 @@ Status: `200 OK`
 
 ## 📬 Proves amb Postman
 
-Trobaràs un fitxer d'import de proves a [postman.json](postman.json). Importa-la a Postman per provar tots els endpoints.
+Trobaràs un fitxer d'import de proves a [postman.json](postman.json). Importa-la a Postman per provar tots els endpoints. (Assegureu-vos de tenir un entorn amb una variable anomenada "token" amb un token vàlid com a valor).
 
 ---
