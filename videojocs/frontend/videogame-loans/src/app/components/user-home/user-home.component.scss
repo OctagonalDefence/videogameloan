@@ -55,6 +55,24 @@ th {
     margin-left: 20px;
 }
 
+.pagination-controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-controls button {
+    background-color: aquamarine;
+    color: black;
+    font-size: 1.2em;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 600px) {
     .container {
         padding: 0;

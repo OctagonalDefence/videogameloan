@@ -6,24 +6,30 @@
             <a href="/loan-registry" class="see-loans-link">Veure préstecs</a>
         </div>
         <h2>Videojocs Disponibles Per a Llogar</h2>
-        <input type="text" placeholder="Cerca per nom" [(ngModel)]="searchTerm" (input)="filterGames()" class="search-bar">
+        <input type="text" placeholder="Cerca per nom" [(ngModel)]="searchTerm" (input)="filterGames()"
+            class="search-bar">
         <table>
             <tr>
                 <th>Nom</th>
                 <th>Desenvolupadora</th>
                 <th>Any de llançament</th>
-                <th>Plataforma</th> 
-                <th>Accions</th>  
+                <th>Plataforma</th>
+                <th>Accions</th>
             </tr>
             <tr *ngFor="let videogame of filteredVideogames">
                 <td>{{videogame.nom}}</td>
                 <td>{{videogame.desenvolupadora}}</td>
                 <td>{{videogame.any}}</td>
                 <td>{{videogame.plataforma}}</td>
-                <td>                   
-                     <button (click)="openVideogame(videogame.UID)">Obrir Fitxa</button>                    
+                <td>
+                    <button (click)="openVideogame(videogame.UID)">Obrir Fitxa</button>
                 </td>
             </tr>
         </table>
+        <div class="pagination-controls">
+            <button (click)="prevPage()" [disabled]="page === 1">Anterior</button>
+            <span>Pàgina {{page}} de {{totalPages}}</span>
+            <button (click)="nextPage()" [disabled]="page === totalPages">Següent</button>
+        </div>
     </div>
 </div>

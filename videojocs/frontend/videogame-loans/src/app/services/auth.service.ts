@@ -32,10 +32,10 @@ export class AuthService {
     localStorage.removeItem('username');
   }
 
-  getAllGames(): Observable<any[]> {
+  getAllGames(page: number = 1, limit: number = 10): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any[]>(`${dbUrl}/games/getAllGames`, { headers });
+    return this.http.get<any>(`${dbUrl}/games/getAllGames?page=${page}&limit=${limit}`, { headers });
   }
 
   getAllLoans() {
@@ -45,10 +45,10 @@ export class AuthService {
   }
 
   getUserLoans(userID: string) {
-  const token = localStorage.getItem('token');
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.post(`${this.dbUrl}/loans/getUserLoans`, { userID }, { headers });
-}
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.dbUrl}/loans/getUserLoans`, { userID }, { headers });
+  }
 
   rentVideogame(gameID: string, userID: string, days: number) {
     const token = localStorage.getItem('token');
@@ -57,14 +57,14 @@ export class AuthService {
   }
 
   returnVideogame(gameID: string, userID: string) {
-  const token = localStorage.getItem('token');
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.post(`${dbUrl}/loans/returnVideoGame`, { gameID, userID }, { headers });
-}
-updateLoanDays(loanId: number, days: number) {
-  const token = localStorage.getItem('token');
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.post(`${this.dbUrl}/loans/updateLoanDays`, { loanId, days }, { headers });
-}
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${dbUrl}/loans/returnVideoGame`, { gameID, userID }, { headers });
+  }
+  updateLoanDays(loanId: number, days: number) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.dbUrl}/loans/updateLoanDays`, { loanId, days }, { headers });
+  }
 
 }

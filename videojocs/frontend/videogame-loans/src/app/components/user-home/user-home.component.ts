@@ -18,13 +18,17 @@ export class UserHomeComponent implements OnInit {
   filteredVideogames: Videogame[] = [];
   searchTerm: string = '';
 
+  page: number = 1;
+  limit: number = 3;
+  totalPages: number = 1;
+
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-  this.user.username = localStorage.getItem('username');
-  this.loadGames();
-  (window as any).rentVideogame = (uid: string, days: number) => this.rentVideogame(uid, days);
-}
+    this.user.username = localStorage.getItem('username');
+    this.loadGames();
+    (window as any).rentVideogame = (uid: string, days: number) => this.rentVideogame(uid, days);
+  }
 
   ngOnDestroy() {
     delete (window as any).rentVideogame;
@@ -34,11 +38,11 @@ export class UserHomeComponent implements OnInit {
     this.authService.logout();
   }
 
-  loadGames() {
-    this.authService.getAllGames().subscribe({
-      next: (data: any) => {
-        console.log('Games loaded:', data);
-        this.videogames = data.map((game: any) => ({
+  loadGames(page: number = 1) {
+    this.authService.getAllGames(page, this.limit).subscribe({
+      next: (res: any) => {
+        console.log('Games loaded:', res);
+        this.videogames = res.data.map((game: any) => ({
           UID: game.UID,
           nom: game.Nom,
           any: game.Any_Publicacio,
@@ -47,12 +51,25 @@ export class UserHomeComponent implements OnInit {
           unitats: game.Unitats
         }));
         this.filteredVideogames = [...this.videogames];
-
+        this.page = res.page;
+        this.totalPages = res.totalPages;
       },
       error: (err) => {
         console.error(err);
       }
     });
+  }
+
+  nextPage() {
+    if (this.page < this.totalPages) {
+      this.loadGames(this.page + 1);
+    }
+  }
+
+  prevPage() {
+    if (this.page > 1) {
+      this.loadGames(this.page - 1);
+    }
   }
 
   filterGames() {
@@ -61,22 +78,22 @@ export class UserHomeComponent implements OnInit {
     );
   }
 
- openVideogame(uid: string) {
-  const videogame = this.filteredVideogames.find(game => game.UID === uid);
-  console.log('Opening game with UID:', uid, 'Found:', videogame);
+  openVideogame(uid: string) {
+    const videogame = this.filteredVideogames.find(game => game.UID === uid);
+    console.log('Opening game with UID:', uid, 'Found:', videogame);
 
-  if (!videogame) {
-    console.error('Videogame not found');
-    return;
-  }
+    if (!videogame) {
+      console.error('Videogame not found');
+      return;
+    }
 
-  const popup = window.open('', `videogame_${uid}_${Date.now()}`, 'width=600,height=400');
-  if (!popup) {
-    console.error('Popup blocked or failed to open');
-    return;
-  }
+    const popup = window.open('', `videogame_${uid}_${Date.now()}`, 'width=600,height=400');
+    if (!popup) {
+      console.error('Popup blocked or failed to open');
+      return;
+    }
 
-  popup.document.write(`
+    popup.document.write(`
     <html>
       <head>
         <title>${videogame.nom}</title>
@@ -102,16 +119,16 @@ export class UserHomeComponent implements OnInit {
       </body>
     </html>
   `);
-  popup.document.close();
-}
-
-rentVideogame(nom: string, days: number) {
-  const userID = localStorage.getItem('username');
-  if (userID) {
-    this.authService.rentVideogame(nom, userID, days).subscribe({
-      next: () => { console.log('Videogame rented successfully'); },
-      error: (err) => { console.error(err); }
-    });
+    popup.document.close();
   }
-}
+
+  rentVideogame(nom: string, days: number) {
+    const userID = localStorage.getItem('username');
+    if (userID) {
+      this.authService.rentVideogame(nom, userID, days).subscribe({
+        next: () => { console.log('Videogame rented successfully'); },
+        error: (err) => { console.error(err); }
+      });
+    }
+  }
 }

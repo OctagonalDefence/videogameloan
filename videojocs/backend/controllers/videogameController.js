@@ -4,10 +4,29 @@ import errorHandler from '../middleware/errorHandler.js';
 
 export const getAllGames = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+
     const pool = await getPool();
+
+    const countResult = await pool.request()
+      .query('SELECT COUNT(*) as total FROM Videojoc');
+    const total = countResult.recordset[0].total;
+
     const result = await pool.request()
-      .query('SELECT UID, Nom, Any_Publicacio, Unitats, Plataforma, Publicadora FROM Videojoc ORDER BY Any_Publicacio');
-    res.json(result.recordset);
+      .query(`SELECT UID, Nom, Any_Publicacio, Unitats, Plataforma, Publicadora
+              FROM Videojoc
+              ORDER BY Any_Publicacio
+              OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY`);
+
+    res.json({
+      data: result.recordset,
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (error) {
     errorHandler(error, req, res);
   }
