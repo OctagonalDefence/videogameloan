@@ -8,9 +8,9 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+   "author": "Eric Romero",
+  "description": "A videogame loan management application built with Angular and Express.",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",

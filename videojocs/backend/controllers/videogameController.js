@@ -17,7 +17,7 @@ export const getAllGames = async (req, res) => {
     const total = countResult.recordset[0].total;
 
     const result = await pool.request()
-      .query(`SELECT UID, Nom, Any_Publicacio, Unitats, Plataforma, Publicadora
+      .query(`SELECT UID, Nom, Any_Publicacio, Unitats, Plataforma, Publicadora, anyCreacio
               FROM Videojoc
               ORDER BY ${sortBy} ${order}
               OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY`);

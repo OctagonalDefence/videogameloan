@@ -46,10 +46,13 @@ export class UserHomeComponent implements OnInit {
           UID: game.UID,
           nom: game.Nom,
           any: game.Any_Publicacio,
+          anyCreacio: game.anyCreacio,
           plataforma: game.Plataforma,
           desenvolupadora: game.Publicadora,
           unitats: game.Unitats
         }));
+
+        console.log('Mapped Videogames:', this.videogames);
         this.filteredVideogames = [...this.videogames];
         this.page = res.page;
         this.totalPages = res.totalPages;

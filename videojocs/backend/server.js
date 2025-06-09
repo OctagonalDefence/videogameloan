@@ -22,7 +22,6 @@ app.use('/api/v1/', apiLimiter);
 app.use(cors({ origin: 'http://localhost:4200' }));
 app.use(express.json());
 
-;
 
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/games', authenticateJWT, gameRoutes);

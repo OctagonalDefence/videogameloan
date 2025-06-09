@@ -38,6 +38,13 @@ export class AuthService {
     return this.http.get<any>(`${dbUrl}/games/getAllGames?page=${page}&limit=${limit}`, { headers });
   }
 
+  getRenovacions(loanId: number): Observable<any> {
+  console.log('Fetching renovations for loan ID:', loanId);
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.post(`${dbUrl}/loans/getRenovacions`, { loanId }, { headers });
+}
+
   getAllLoans() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

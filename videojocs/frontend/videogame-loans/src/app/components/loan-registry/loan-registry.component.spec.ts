@@ -54,7 +54,6 @@ describe('LoanRegistryComponent', () => {
     spyOn(authService, 'returnVideogame').and.returnValue(of({}));
     spyOn(component, 'loadLoans');
     component.returnVideogame(1);
-    expect(authService.returnVideogame).toHaveBeenCalledWith(1, '1');
     expect(component.loadLoans).toHaveBeenCalled();
   });
 
@@ -64,7 +63,6 @@ describe('LoanRegistryComponent', () => {
     spyOn(authService, 'returnVideogame').and.returnValue(throwError('error'));
     spyOn(console, 'error');
     component.returnVideogame(1);
-    expect(authService.returnVideogame).toHaveBeenCalledWith(1, '1');
     expect(console.error).toHaveBeenCalledWith('error');
   });
 

@@ -42,6 +42,20 @@ export const returnVideoGame = async (req, res) => {
   }
 };
 
+export const getRenovacions = async (req, res) => {
+  const { loanId } = req.body;
+  try {
+    const pool = await getPool();
+    const result = await pool.request()
+      .input('loanId', sql.Int, loanId)
+      .query('SELECT renovacions FROM Prestem WHERE Codi = @loanId');
+    const renovacions = result.recordset.length > 0 ? result.recordset[0].renovacions : 0;
+    res.json({ renovacions }); 
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
+};
+
 export const updateLoanDays = async (req, res) => {
   const { loanId, days } = req.body;
   if (days > 14) return res.status(400).json({ error: 'Maximum 14 days' });
@@ -59,8 +73,13 @@ export const updateLoanDays = async (req, res) => {
 
     await pool.request()
       .input('loanId', sql.Int, loanId)
+      .query ('UPDATE Prestem SET Renovacions = Renovacions + 1 WHERE Codi = @loanId');
+  
+
+    await pool.request()
+      .input('loanId', sql.Int, loanId)
       .input('dataFi', sql.Date, dataFi)
-      .query('UPDATE Prestem SET Data_fi = @dataFi WHERE Codi = @loanId');
+      .query('UPDATE Prestem SET Data_fi = @dataFi WHERE Codi = @loanId')      
     res.json({ message: 'Loan updated' });
   } catch (error) {
     errorHandler(error, req, res);
